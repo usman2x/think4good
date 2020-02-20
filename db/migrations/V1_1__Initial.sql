@@ -1,4 +1,5 @@
-CREATE TABLE `think4good`.`project_categories`(
+-- project categories
+create TABLE `think4good`.`project_categories`(
   `id` INT NOT NULL AUTO_INCREMENT,
   `category_id` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NULL,
@@ -11,7 +12,8 @@ CREATE TABLE `think4good`.`project_categories`(
 UNIQUE INDEX `category_id_UNIQUE` (`category_id` ASC) VISIBLE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `think4good`.`developers` (
+-- developers
+create TABLE `think4good`.`developers` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `developer_id` VARCHAR(255) NOT NULL,
   `name` VARCHAR(255) NULL,
@@ -34,7 +36,8 @@ CREATE TABLE `think4good`.`developers` (
 UNIQUE INDEX `developer_id_UNIQUE` (`developer_id` ASC) VISIBLE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `think4good`.`projects` (
+-- projects
+create TABLE `think4good`.`projects` (
   `id` BIGINT(10) NOT NULL AUTO_INCREMENT,
   `project_id` VARCHAR(255) NOT NULL,
   `developer_id` VARCHAR(255) NOT NULL,
@@ -56,16 +59,17 @@ CREATE TABLE `think4good`.`projects` (
       CONSTRAINT `fk_projects_category_id`
         FOREIGN KEY (`category_id`)
         REFERENCES `think4good`.`project_categories` (`category_id`)
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION,
+        ON delete NO ACTION
+        ON update NO ACTION,
       CONSTRAINT `fk_projects_developer_id`
         FOREIGN KEY (`developer_id`)
         REFERENCES `think4good`.`developers` (`developer_id`)
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
+        ON delete NO ACTION
+        ON update NO ACTION
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `think4good`.`comments`(
+--comments
+create TABLE `think4good`.`comments`(
   `id` BIGINT(30) NOT NULL AUTO_INCREMENT,
   `description` LONGTEXT NULL,
   `project_id` VARCHAR(255) NULL,
@@ -80,16 +84,17 @@ CREATE TABLE `think4good`.`comments`(
     CONSTRAINT `fk_comments_developer_id`
       FOREIGN KEY (`developer_id`)
       REFERENCES `think4good`.`developers` (`developer_id`)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION,
+      ON delete NO ACTION
+      ON update NO ACTION,
     CONSTRAINT `fk_comments_project_id`
       FOREIGN KEY (`project_id`)
       REFERENCES `think4good`.`projects` (`project_id`)
-      ON DELETE NO ACTION
-      ON UPDATE NO ACTION
+      ON delete NO ACTION
+      ON update NO ACTION
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `think4good`.`project_subscriptions` (
+--project subscriptions
+create TABLE `think4good`.`project_subscriptions` (
   `id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `vote` TINYINT(1) ZEROFILL NULL DEFAULT 0,
   `subscribe` TINYINT(1) ZEROFILL NULL DEFAULT 0,
@@ -105,15 +110,18 @@ CREATE TABLE `think4good`.`project_subscriptions` (
   CONSTRAINT `fk_project_subscriptions_developer_id`
     FOREIGN KEY (`developer_id`)
     REFERENCES `think4good`.`developers` (`developer_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON delete NO ACTION
+    ON update NO ACTION,
   CONSTRAINT `fk_project_subscriptions_project_id`
     FOREIGN KEY (`project_id`)
     REFERENCES `think4good`.`projects` (`project_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+    ON delete NO ACTION
+    ON update NO ACTION
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `think4good`.`developers` (`developer_id`, `name`, `story`) VALUES ('hafizusman530', 'M usman', 'dummy');
-INSERT INTO `think4good`.`project_categories` (`category_id`, `name`, `description`) VALUES ('ED_TECH', 'Ed Tech', 'Ed Tech');
-INSERT INTO `think4good`.`projects` (`project_id`, `developer_id`, `category_id`, `title`, `state`, `description`) VALUES ('PRO_1', 'hafizusman530', 'ED_TECH', 'Title', 'init', 'description');
+--dummy data
+insert into `think4good`.`developers` (`developer_id`, `name`, `story`) values ('hafizusman530', 'M usman', 'dummy');
+insert into `think4good`.`project_categories` (`category_id`, `name`, `description`) values ('ED_TECH', 'Ed Tech', 'Ed Tech');
+insert into `think4good`.`projects` (`project_id`, `developer_id`, `category_id`, `title`, `state`, `description`) values ('PRO_1', 'hafizusman530', 'ED_TECH', 'Title', 'init', 'description');
+INSERT INTO `project_subscriptions` VALUES (1,1,1,'PRO_1','hafizusman530',NULL,NULL,'2020-02-20 16:29:58',NULL);
+INSERT INTO `comments` VALUES (1,'comment description','PRO_1','hafizusman530',NULL,NULL,'2020-02-20 16:30:48',NULL);
